@@ -1,0 +1,577 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Docker - IKIM Cluster</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#docker-on-cluster-hosts" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="IKIM Cluster" class="md-header__button md-logo" aria-label="IKIM Cluster" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IKIM Cluster
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="IKIM Cluster" class="md-nav__button md-logo" aria-label="IKIM Cluster" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    IKIM Cluster
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          User Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Docker
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Docker
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-nfs-shares" class="md-nav__link">
+    Accessing NFS shares
+  </a>
+  
+    <nav class="md-nav" aria-label="Accessing NFS shares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#executing-containers-as-a-regular-user" class="md-nav__link">
+    Executing containers as a regular user
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mounting-project-or-group-directories" class="md-nav__link">
+    Mounting project or group directories
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-account-information-to-containers" class="md-nav__link">
+    Adding account information to containers
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jupyter/" class="md-nav__link">
+        Jupyter Notebooks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        FAQs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-nfs-shares" class="md-nav__link">
+    Accessing NFS shares
+  </a>
+  
+    <nav class="md-nav" aria-label="Accessing NFS shares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#executing-containers-as-a-regular-user" class="md-nav__link">
+    Executing containers as a regular user
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mounting-project-or-group-directories" class="md-nav__link">
+    Mounting project or group directories
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-account-information-to-containers" class="md-nav__link">
+    Adding account information to containers
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="docker-on-cluster-hosts">Docker on cluster hosts</h1>
+<p>Features of the cluster hosts such as centralized identity management, NFS shares and automounting may cause issues with Docker containers. This guide describes how to work around the most common problems.</p>
+<h2 id="accessing-nfs-shares">Accessing NFS shares</h2>
+<p>For security and performance reasons, <a href="../getting-started/#where-to-store-your-data">NFS shares</a> on IKIM hosts are configured in a way that makes them at odds with Docker's defaults.</p>
+<p>One of the consequences is that while containers are executed as root by default, the NFS server transparently downgrades the root user to <code>nobody</code>. The root user in a conainer has no elevated privileges over files on NFS: its access depends on the permissions for all users (the last 3 <em>file mode bits</em>).</p>
+<h3 id="executing-containers-as-a-regular-user">Executing containers as a regular user</h3>
+<p>The root user problem is solved by launching the container as the current user and primary group:</p>
+<div class="highlight"><pre><span></span><code>docker run --rm --user<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&quot;</span> &lt;image&gt; &lt;command&gt;
+</code></pre></div>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code>$ docker run --rm --user<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&quot;</span> alpine id
+<span class="nv">uid</span><span class="o">=</span><span class="m">477800001</span> <span class="nv">gid</span><span class="o">=</span><span class="m">477800001</span>
+</code></pre></div>
+<p>With Docker Compose, this can be achieved with the <code>user:</code> directive and environment variables in the <code>docker-compose.yml</code> file:</p>
+<div class="highlight"><pre><span></span><code>services:
+  app:
+    # Instruct the container to run as the specified user and group.
+    # This only affects executing an image, not the build process.
+    user: ${DOCKER_UID}:${DOCKER_GID}
+</code></pre></div>
+<p>The variables can be defined in the launch command <em>(a)</em> or by creating a <code>.env</code> file alongside <code>docker-compose.yml</code> <em>(b)</em>.</p>
+<p><em>a</em>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">DOCKER_UID</span><span class="o">=</span><span class="k">$(</span>id -u<span class="k">)</span> <span class="nv">DOCKER_GID</span><span class="o">=</span><span class="k">$(</span>id -g<span class="k">)</span> docker compose up
+</code></pre></div>
+<p><em>b</em>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;DOCKER_UID=</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&quot;</span> &gt;&gt; .env
+<span class="nb">echo</span> <span class="s2">&quot;DOCKER_GID=</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&quot;</span> &gt;&gt; .env
+</code></pre></div>
+<h3 id="mounting-project-or-group-directories">Mounting project or group directories</h3>
+<p>Automounted NFS locations have a parent which is permanently mounted and several subdirectories which are automounted. For example, <code>/projects/datashare</code> consists of a permanently mounted path <code>/projects</code> and an automounted subdirectory <code>datashare</code>. In order to access any level below the automounted directory, Docker needs to mount the top level so that it spawns on the host:</p>
+<div class="highlight"><pre><span></span><code>docker run --rm --user<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&quot;</span> -v /projects/datashare:/datashare alpine ls /datashare
+</code></pre></div>
+<p>The example above is not enough to access NFS shares which require the user to be a member of a specific group. For example, <code>/projects/myproject</code> would be acessible by members of the group <code>myproject</code>, therefore the Docker container needs to be launched with a user who belongs to the appropriate group. First, obtain the correct group ID by inspecting the target directory:</p>
+<div class="highlight"><pre><span></span><code>$ ls -nd /projects/myproject
+drwxrws--- <span class="m">3</span> <span class="m">0</span> <span class="m">54321</span> <span class="m">3</span> Dec  <span class="m">2</span> <span class="m">12</span>:21 /projects/myproject
+</code></pre></div>
+<p>The output of <code>ls -nd</code> in the example shows that the gid is <code>54321</code>. The container can now be launched by passing the gid to the <code>--group-add</code> option:</p>
+<div class="highlight"><pre><span></span><code>docker run --rm -it --user<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&quot;</span> --group-add<span class="o">=</span><span class="m">54321</span> -v /projects/myproject:/myproject alpine
+</code></pre></div>
+<h2 id="adding-account-information-to-containers">Adding account information to containers</h2>
+<p>Launching a container with <code>--user="$(id -u):$(id -g)"</code> simply sets the uid and gid but does not create an account in the container. This option is insufficient for containerized applications which require unix accounts to exist in the image.</p>
+<p>A possible solution involves modifying the image by adding a local account to it, for example by adding <code>RUN groupadd mygroup &amp;&amp; useradd --no-log-init -g mygroup myuser</code> to <code>Dockerfile</code>.</p>
+<p>An alternative approach is to list all required groups and accounts in local files using the <code>/etc/group</code> and <code>/etc/passwd</code> formats, then mount these files in the container. The following example generates local <code>group</code> and <code>passwd</code> files containing the current account:</p>
+<div class="highlight"><pre><span></span><code>mkdir <span class="s2">&quot;/local/work/</span><span class="nv">$USER</span><span class="s2">-docker&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;</span><span class="k">$(</span>id -un<span class="k">)</span><span class="s2">:x:</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">::/home/</span><span class="nv">$USER</span><span class="s2">:/bin/sh&quot;</span> &gt; <span class="s2">&quot;/local/work/</span><span class="nv">$USER</span><span class="s2">-docker/fakepasswd&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;</span><span class="k">$(</span>id -gn<span class="k">)</span><span class="s2">:x:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">:&quot;</span> &gt; <span class="s2">&quot;/local/work/</span><span class="nv">$USER</span><span class="s2">-docker/fakegroup&quot;</span>
+</code></pre></div>
+<p>The container is then launched by mounting the files (optionally in read-only mode):</p>
+<div class="highlight"><pre><span></span><code>docker run --rm --user<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&quot;</span> -v <span class="s2">&quot;/local/work/</span><span class="nv">$USER</span><span class="s2">-docker/fakegroup:/etc/group:ro&quot;</span> -v <span class="s2">&quot;/local/work/</span><span class="nv">$USER</span><span class="s2">-docker/fakepasswd:/etc/passwd:ro&quot;</span> &lt;image&gt; &lt;command&gt;
+</code></pre></div>
+<p>To avoid having to create these files on each host, they can be stored in the home directory on NFS with the caveat that all components of the path must be world-readable and browseable (see <a href="./#accessing-nfs-shares">Accessing NFS shares</a>).</p>
+<div class="highlight"><pre><span></span><code>chmod a+rx <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">&quot;</span>
+chmod a+r <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/fakegroup&quot;</span> <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/fakepasswd&quot;</span>
+docker run --rm --user<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&quot;</span> -v <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/fakegroup:/etc/group:ro&quot;</span> -v <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/fakepasswd:/etc/passwd:ro&quot;</span> &lt;image&gt; &lt;command&gt;
+</code></pre></div>
+<p>With Docker Compose, it's recommended to generate a <code>.env</code> file to provide the necessary values for <code>docker-compose.yml</code>:</p>
+<div class="highlight"><pre><span></span><code>services:
+  app:
+    # Instruct the container to run as the specified user and group.
+    # This only affects executing an image, not the build process.
+    user: ${DOCKER_UID}:${DOCKER_GID}
+    volumes:
+      # Bind-mount the fake passwd and group files.
+      - ${FAKE_PASSWDFILE}:/etc/passwd:ro
+      - ${FAKE_GROUPFILE}:/etc/group:ro
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>cat &gt; .env <span class="s">&lt;&lt;EOF</span>
+<span class="s">DOCKER_UID=$(id -u)</span>
+<span class="s">DOCKER_GID=$(id -g)</span>
+<span class="s">FAKE_PASSWDFILE=/local/work/$USER-docker/fakepasswd</span>
+<span class="s">FAKE_GROUPFILE=/local/work/$USER-docker/fakegroup</span>
+<span class="s">EOF</span>
+</code></pre></div>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../getting-started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Getting Started
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../jupyter/" class="md-footer__link md-footer__link--next" aria-label="Next: Jupyter Notebooks" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Jupyter Notebooks
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2021 Institut für künstliche Intelligenz in der Medizin (IKIM), Essen
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
